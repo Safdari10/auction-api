@@ -8,11 +8,13 @@ const searchItems = async (req, res) => {
         let keywords = query;
         if (useAI) {
             const result = await refineSearch(query);
-            keywords = result;
+            // Sanitize the AI-generated search terms
+            keywords = result.replace(/[\n\r]+/g, ' ').replace(/[*[\](){}]/g, '');
+            console.log(keywords)
         }
-
-     // Perform keyword search in MongoDB
-     const regex = new RegExp(keywords, "i");
+        
+        // Perform keyword search in MongoDB
+        const regex = new RegExp(keywords, "i");
         const items = await AuctionItem.find({
             $or: [
                 { title: regex },
@@ -28,7 +30,7 @@ const searchItems = async (req, res) => {
     } catch (error) {
         res.status(500).json({
             success: false,
-            message: "Server error occured",
+            message: "Server error occurred",
             error: error.message
         });
     }
