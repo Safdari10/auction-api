@@ -2,7 +2,7 @@ const express = require('express');
 const dotenv = require('dotenv');
 const cors = require('cors');
 const bodyParser = require('body-parser');
-const connectDB = require('./src/config/db');
+const connectDB = require('./src/config/mongoDB');
 const searchRoutes = require('./src/routes/searchRoutes');
 
 
