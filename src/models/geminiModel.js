@@ -18,8 +18,7 @@ const refineSearch = async (query) => {
         const result = await model.generateContent(
             `Suggest better search terms for: ${query}`
         );
-        const keywords = result.data.text().trim();
-        return keywords;
+      return result.data.text().trim();
     } catch (error) {
         console.error("Error refining search terms:", error);
         throw error;
